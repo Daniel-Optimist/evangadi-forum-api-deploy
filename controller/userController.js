@@ -186,7 +186,8 @@ async function requestPasswordReset(req, res) {
           console.log("No user found with the given email.");
         }
         // Send reset email with reset link (make sure you have a mailer function to send the email) // this is plain text (not HTML formatted)
-        const resetLink = `http://localhost:5173/resetPassword/${resetToken}`; // Adjusted based on your frontend's URL for the reset page
+        // const resetLink = `http://localhost:5173/resetPassword/${resetToken}`; // Adjusted based on your frontend's URL for the reset page
+        const resetLink = `https://evangadi-forum-client-june2024grp3a.netlify.app/${resetToken}`
         
         await mailer.sendPasswordResetEmail(email, resetLink);
 
@@ -346,6 +347,22 @@ module.exports = {
   validateResetToken, // Added this function to the export for token validation
   resetPassword, // Ensure this is exported for password reset
 };
+
+
+// 1) User Requests Password Reset: The user provides their email to request a reset.
+// 2) Backend Sends Email: The backend generates a reset token, stores it temporarily, and sends an email with a link to the frontend. This link points to the frontend's password reset page, where the user can provide a new password.
+// 3)User Clicks the Link:The user clicks the link (e.g., http://localhost:5173/reset-password/{resetToken}) in the email.
+// 4) Frontend Receives the Token:The frontend reads the reset token from the URL and sends it to the backend for validation.
+// 5)Backend Validates Token:The backend checks if the token is valid and hasn’t expired.
+// If valid, the frontend displays a form where the user can enter a new password.
+// 6) User Submits New Password:The frontend sends the new password to the backend, and the backend updates the user's password in the database.
+
+// The frontend URL is necessary in the backend’s email because the reset link needs to direct the user to the frontend's password reset page. The frontend handles the user interaction of inputting the new password, and the backend validates the reset token and updates the password in the database.
+
+// Without the frontend URL, the user wouldn't know where to go to reset their password. The backend can’t handle user interactions like filling in the new password directly, so it provides a link that directs the user to the frontend route that displays the password reset form.
+
+
+
 
 // // Import necessary modules
 // const dbConnection = require("../db/dbConfig"); // Database connection
@@ -768,17 +785,6 @@ module.exports = {
 //   resetPassword,
 // };
 
-// 1) User Requests Password Reset: The user provides their email to request a reset.
-// 2) Backend Sends Email: The backend generates a reset token, stores it temporarily, and sends an email with a link to the frontend. This link points to the frontend's password reset page, where the user can provide a new password.
-// 3)User Clicks the Link:The user clicks the link (e.g., http://localhost:5173/reset-password/{resetToken}) in the email.
-// 4) Frontend Receives the Token:The frontend reads the reset token from the URL and sends it to the backend for validation.
-// 5)Backend Validates Token:The backend checks if the token is valid and hasn’t expired.
-// If valid, the frontend displays a form where the user can enter a new password.
-// 6) User Submits New Password:The frontend sends the new password to the backend, and the backend updates the user's password in the database.
-
-// The frontend URL is necessary in the backend’s email because the reset link needs to direct the user to the frontend's password reset page. The frontend handles the user interaction of inputting the new password, and the backend validates the reset token and updates the password in the database.
-
-// Without the frontend URL, the user wouldn't know where to go to reset their password. The backend can’t handle user interactions like filling in the new password directly, so it provides a link that directs the user to the frontend route that displays the password reset form.
 
 /********************Initial code *********/
 
