@@ -25,6 +25,14 @@ const authMiddleware = require("./middleware/authMiddleware");
 const userRouter = require("./routes/userRoute");
 // json middleware to extract json data
 app.use(express.json());
+
+//get request  ; added to get a success message when deploying it on render
+app.get("/", (req, res) => {
+  res.status(200).json({
+    message: "Success!",
+  });
+});
+
 // user router middleware
 app.use("/api/users", userRouter);
 
