@@ -1,7 +1,7 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const port = 5500 //DKG: port where backend listens requests coming from frontend 
+const port = process.env.PORT || 5500 ; //DKG: port where backend listens requests coming from frontend ; process.env.PORT added for render deployment to work; When deploying on Render, the environment variable PORT is automatically set for you by the platform, and this is the port that your app should listen to. Therefore, you should not set PORT manually in .env for Render deployments. For local development, the fallback (5500) ensures that your app will still work without issues, but Render will use process.env.PORT for the production environment.
 const cors = require("cors");
 
 app.use(cors());
