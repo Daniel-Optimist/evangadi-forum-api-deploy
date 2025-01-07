@@ -187,7 +187,7 @@ async function requestPasswordReset(req, res) {
         }
         // Send reset email with reset link (make sure you have a mailer function to send the email) // this is plain text (not HTML formatted)
         // const resetLink = `http://localhost:5173/resetPassword/${resetToken}`; // Adjusted based on your frontend's URL for the reset page
-        const resetLink = `https://evangadi-forum-client-june2024grp3a.netlify.app/${resetToken}`
+        const resetLink = `https://evangadi-forum-client-june2024grp3a.netlify.app/resetPassword/${resetToken}`;
         
         await mailer.sendPasswordResetEmail(email, resetLink);
 
